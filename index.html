@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>برای آیسان ❤️</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+font-family:tahoma,sans-serif;
+min-height:100vh;
+overflow:hidden;
+transition:.5s;
+background:linear-gradient(135deg,#111,#2d1b69);
+color:white;
+}
+.theme-night{background:linear-gradient(135deg,#111,#2d1b69);}
+.theme-pink{background:linear-gradient(135deg,#ff5f9e,#ffc1d6);}
+.theme-neon{background:linear-gradient(135deg,#050505,#00d4ff);}
+.screen{
+display:none;
+height:100vh;
+padding:20px;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+}
+.active{display:flex}
+.card{
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(12px);
+padding:25px;
+border-radius:24px;
+max-width:800px;
+width:100%;
+}
+h1,h2{margin-bottom:15px}
+button{
+padding:12px 22px;
+margin:8px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+font-size:16px;
+}
+.hearts{display:flex;gap:15px;flex-wrap:wrap;justify-content:center}
+.heart{
+font-size:50px;
+cursor:pointer;
+transition:.3s;
+}
+.heart:hover{transform:scale(1.2)}
+#letter{
+line-height:2;
+font-size:18px;
+display:none;
+margin-top:15px;
+}
+#score{font-size:30px;margin:15px}
+#movingHeart{
+font-size:60px;
+position:absolute;
+cursor:pointer;
+user-select:none;
+}
+#secret{display:none;margin-top:15px;line-height:2}
+.floating{
+position:absolute;
+font-size:24px;
+animation:fall 8s linear infinite;
+opacity:.5;
+}
+@keyframes fall{
+from{transform:translateY(-100px)}
+to{transform:translateY(110vh)}
+}
+</style>
+</head>
+<body class="theme-night">
+
+<div class="screen active" id="s1">
+<div class="card">
+<h1>برای آیسان ❤️</h1>
+<p>یه چیز کوچیک ساختم... ولی باید پیداش کنی.</p><br>
+<button onclick="go('s2')">شروع</button>
+</div>
+</div>
+
+<div class="screen" id="s2">
+<div class="card">
+<h2>قلب درست رو پیدا کن ❤️</h2>
+<div class="hearts">
+<div class="heart" onclick="wrong()">💔</div>
+<div class="heart" onclick="wrong()">💔</div>
+<div class="heart" onclick="right()">❤️</div>
+<div class="heart" onclick="wrong()">💔</div>
+<div class="heart" onclick="wrong()">💔</div>
+</div>
+<p id="gameMsg"></p>
+</div>
+</div>
+
+<div class="screen" id="s3">
+<div class="card">
+<h2>نامه</h2>
+<button onclick="toggleLetter()">باز کردن نامه</button>
+<div id="letter">
+آیسان،<br><br>
+قرار نبود اینقدر مهم بشی.<br>
+قرار بود فقط یکی باشی مثل بقیه آدم‌ها.<br><br>
+ولی یواش یواش شدی اولین کسی که دوست دارم خبر خوبمو بهش بگم.<br>
+و آخرین کسی که قبل خواب بهش فکر میکنم.<br><br>
+❤️
+</div>
+<br>
+<button onclick="go('s4')">مرحله بعد</button>
+</div>
+</div>
+
+<div class="screen" id="s4">
+<div class="card">
+<h2>تم دلخواهت رو انتخاب کن</h2>
+<button onclick="theme('theme-night')">🌙 شب</button>
+<button onclick="theme('theme-pink')">🌸 صورتی</button>
+<button onclick="theme('theme-neon')">⚡ نئون</button>
+<br><br>
+<button onclick="go('s5')">بازی عشق</button>
+</div>
+</div>
+
+<div class="screen" id="s5">
+<div class="card">
+<h2>قلب رو بگیر</h2>
+<div id="score">0 عشق ❤️</div>
+<p>به 50 برس.</p>
+<button onclick="go('s6')">رد کردن بازی</button>
+</div>
+<div id="movingHeart">❤️</div>
+</div>
+
+<div class="screen" id="s6">
+<div class="card">
+<button onclick="showSecret()">فقط وقتی دلت تنگ شد بزن</button>
+<div id="secret">
+هی خوشگل...<br><br>
+اگه الان اینو میخونی،<br>
+یعنی یه گوشه از روزت به من اختصاص پیدا کرده.<br><br>
+و این برای من از خیلی چیزا باارزش‌تره.<br><br>
+❤️
+</div>
+</div>
+</div>
+
+<script>
+function go(id){
+document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+document.getElementById(id).classList.add('active');
+}
+
+function wrong(){
+document.getElementById('gameMsg').innerText='نه این یکی 😏';
+}
+function right(){
+document.getElementById('gameMsg').innerText='آفرین پیداش کردی ❤️';
+setTimeout(()=>go('s3'),1000);
+}
+function toggleLetter(){
+let l=document.getElementById('letter');
+l.style.display=l.style.display==='block'?'none':'block';
+}
+function theme(t){
+document.body.className=t;
+}
+function showSecret(){
+document.getElementById('secret').style.display='block';
+}
+
+let score=0;
+const heart=document.getElementById('movingHeart');
+
+function moveHeart(){
+if(!heart)return;
+heart.style.left=Math.random()*(window.innerWidth-80)+'px';
+heart.style.top=Math.random()*(window.innerHeight-80)+'px';
+}
+moveHeart();
+
+heart.onclick=function(){
+score++;
+document.getElementById('score').innerText=score+' عشق ❤️';
+moveHeart();
+if(score>=50){
+alert('100٪ متعلق به آیسان ❤️');
+go('s6');
+}
+}
+
+for(let i=0;i<20;i++){
+let h=document.createElement('div');
+h.className='floating';
+h.innerHTML='❤️';
+h.style.left=Math.random()*100+'vw';
+h.style.animationDelay=Math.random()*8+'s';
+document.body.appendChild(h);
+}
+</script>
+</body>
+</html>
